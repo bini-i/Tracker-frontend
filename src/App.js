@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 import './styles/App.css';
 import NewSession from './components/NewSession';
 import NewAccount from './components/NewAccount';
@@ -13,6 +13,9 @@ function App() {
       </div>
       <BrowserRouter>
         <div className="App-body">
+          <Route exact path="/">
+            <Redirect to="/login" />
+          </Route>
           <Route exact path="/login">
             <NewSession />
           </Route>
