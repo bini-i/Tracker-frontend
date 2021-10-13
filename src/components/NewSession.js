@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import * as styles from '../styles/NewSession.module.css';
 
 const NewSession = () => {
@@ -15,6 +16,10 @@ const NewSession = () => {
       console.log('found token storage');
       headers.append('X-User-Email', localStorage.getItem('email'));
       headers.append('X-User-Token', localStorage.getItem('token'));
+    } else {
+      headers.append('X-User-Email', '');
+      headers.append('X-User-Token', '');
+      console.log('found nothing from storage');
     }
 
     const payload = { email, password };
@@ -27,12 +32,14 @@ const NewSession = () => {
         body: JSON.stringify(payload),
       },
     ).then((response) => response);
-
     const data = await response.json();
+    console.log(`data ${data}`);
     if (response.status === 201) {
       console.log(data);
       localStorage.setItem('email', data.user.email);
       localStorage.setItem('token', data.user.authentication_token);
+    } else {
+      console.log('response not 201');
     }
   };
 
@@ -73,6 +80,13 @@ const NewSession = () => {
           <input type="submit" className={styles.inputSubmit} value="Log In" />
         </form>
       </div>
+
+      <h3>
+        Need to create an account?
+        <Link to={{ pathname: '/signup' }}>
+          Sign Up?
+        </Link>
+      </h3>
     </div>
   );
 };
