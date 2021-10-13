@@ -1,5 +1,7 @@
+import { BrowserRouter, Route } from 'react-router-dom';
 import './styles/App.css';
 import NewSession from './components/NewSession';
+import NewAccount from './components/NewAccount';
 
 function App() {
   return (
@@ -9,9 +11,16 @@ function App() {
           LOGIN
         </header>
       </div>
-      <div className="App-body">
-        <NewSession />
-      </div>
+      <BrowserRouter>
+        <div className="App-body">
+          <Route exact path="/login">
+            <NewSession />
+          </Route>
+          <Route exact path="/signup">
+            <NewAccount />
+          </Route>
+        </div>
+      </BrowserRouter>
     </>
   );
 }
