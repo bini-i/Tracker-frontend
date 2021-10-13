@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import * as styles from '../styles/NewSession.module.css';
 
 const handleSession = async (event) => {
@@ -52,7 +53,7 @@ const handleChange = (event) => {
 const NewAccount = () => (
   <div className={styles.newSession}>
     <div className={styles.loginBox}>
-      <h3 className={styles.loginTitle}>Log in using email address</h3>
+      <h3 className={styles.loginTitle}>Sign up using email address</h3>
       <form onSubmit={handleSession}>
         <div className={styles.inputContainer}>
           <div className={styles.inputTitle}>
@@ -71,9 +72,15 @@ const NewAccount = () => (
           </div>
         </div>
 
-        <input type="submit" className={styles.inputSubmit} value="Log In" />
+        <input type="submit" className={styles.inputSubmit} value="Create Account" />
       </form>
     </div>
+
+    <h3 className={styles.loginTitle}>
+      Already have an account?
+      {' '}
+      <Link className="link" to={{ pathname: '/login' }}>Log in</Link>
+    </h3>
   </div>
 );
 

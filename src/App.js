@@ -16,12 +16,8 @@ function App() {
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>
-          <Route exact path="/login">
-            <NewSession />
-          </Route>
-          <Route exact path="/signup">
-            <NewAccount />
-          </Route>
+          <Route exact path="/login" component={NewSession} />
+          <Route exact path="/signup" component={NewAccount} />
         </div>
       </BrowserRouter>
     </>

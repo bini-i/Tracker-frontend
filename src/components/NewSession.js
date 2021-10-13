@@ -84,7 +84,7 @@ const NewSession = () => {
       <h3 className={styles.loginTitle}>
         Need to create an account?
         {' '}
-        <Link className="link" to={{ pathname: '/signup' }}>Sign Up?</Link>
+        <Link className="link" to={{ pathname: '/signup' }}>Sign Up</Link>
       </h3>
     </div>
   );
