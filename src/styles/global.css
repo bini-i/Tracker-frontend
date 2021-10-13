@@ -53,3 +53,7 @@ body {
   --pantone-dark: #67899c;
   --pantone-green: #addc91;
 }
+
+.link {
+  color: #0275d8;
+}
