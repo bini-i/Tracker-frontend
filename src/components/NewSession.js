@@ -30,6 +30,7 @@ const NewSession = () => {
 
     const data = await response.json();
     if (response.status === 201) {
+      console.log(data);
       localStorage.setItem('email', data.user.email);
       localStorage.setItem('token', data.user.authentication_token);
     }
