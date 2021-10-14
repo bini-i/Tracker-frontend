@@ -1,17 +1,20 @@
 import {
   Redirect, Route, Switch,
 } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './styles/App.css';
 import NewSession from './components/NewSession';
 import NewAccount from './components/NewAccount';
+import MenuBar from './components/MenuBar';
 import Tasks from './components/Tasks';
+import { mapDispatchToProps, mapStateToProps } from './reducers';
 
 function App() {
   return (
     <>
       <div className="App">
         <header className="App-header">
-          <h1>Task Tracker</h1>
+          <MenuBar />
         </header>
       </div>
       <div className="App-body">
@@ -28,4 +31,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
