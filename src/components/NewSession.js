@@ -1,8 +1,18 @@
 import { useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { mapDispatchToProps, mapStateToProps } from '../reducers';
 import * as styles from '../styles/NewSession.module.css';
+import Tasks from './Tasks';
 
-const NewSession = () => {
+const NewSession = ({ signedIn, setSignedIn }) => {
+  console.log(signedIn);
+  if (signedIn) {
+    console.log('redirecting');
+    return <Tasks />;
+  }
+  console.log('got here also');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -38,7 +48,9 @@ const NewSession = () => {
       console.log(data);
       localStorage.setItem('email', data.user.email);
       localStorage.setItem('token', data.user.authentication_token);
+      setSignedIn(true);
     } else {
+      setSignedIn(false);
       console.log('response not 201');
     }
   };
@@ -90,4 +102,9 @@ const NewSession = () => {
   );
 };
 
-export default NewSession;
+export default connect(mapStateToProps, mapDispatchToProps)(NewSession);
+
+NewSession.propTypes = {
+  signedIn: PropTypes.bool.isRequired,
+  setSignedIn: PropTypes.func.isRequired,
+};
