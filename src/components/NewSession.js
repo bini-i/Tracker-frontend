@@ -7,12 +7,9 @@ import * as styles from '../styles/NewSession.module.css';
 import Tasks from './Tasks';
 
 const NewSession = ({ signedIn, setSignedIn }) => {
-  console.log(signedIn);
   if (signedIn) {
-    console.log('redirecting');
     return <Tasks />;
   }
-  console.log('got here also');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,13 +20,11 @@ const NewSession = ({ signedIn, setSignedIn }) => {
     headers.append('Content-Type', 'application/json');
 
     if (localStorage.getItem('email') && localStorage.getItem('token')) {
-      console.log('found token storage');
       headers.append('X-User-Email', localStorage.getItem('email'));
       headers.append('X-User-Token', localStorage.getItem('token'));
     } else {
       headers.append('X-User-Email', '');
       headers.append('X-User-Token', '');
-      console.log('found nothing from storage');
     }
 
     const payload = { email, password };
@@ -43,15 +38,12 @@ const NewSession = ({ signedIn, setSignedIn }) => {
       },
     ).then((response) => response);
     const data = await response.json();
-    console.log(`data ${data}`);
     if (response.status === 201) {
-      console.log(data);
       localStorage.setItem('email', data.user.email);
       localStorage.setItem('token', data.user.authentication_token);
       setSignedIn(true);
     } else {
       setSignedIn(false);
-      console.log('response not 201');
     }
   };
 

@@ -1,0 +1,6 @@
+.tasksContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 18px;
+}
