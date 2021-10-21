@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -34,7 +35,9 @@ const MenuBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Task Tracker
+            <Link to={{ pathname: '/' }}>
+              Task Tracker
+            </Link>
           </Typography>
           <div>
             <IconButton
