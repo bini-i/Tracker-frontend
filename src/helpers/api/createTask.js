@@ -14,10 +14,7 @@ const createTask = async (payload) => {
   };
 
   const response = await fetch(url, options).then((response) => response);
-  if (response.status === 201) {
-    console.log('succesfully created');
-    // todo
-  }
+  return response;
 };
 
 export default createTask;

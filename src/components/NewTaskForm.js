@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -15,6 +16,7 @@ const NewTaskForm = () => {
   const [todoRowAmount, settodoRowAmount] = useState(1);
   const [todos] = useState([{ checked: false }]);
   const [progress, setProgress] = useState(0);
+  const history = useHistory();
 
   const handleChange = (event) => {
     if (event.target.name === 'taskName') {
@@ -33,6 +35,11 @@ const NewTaskForm = () => {
         todos[parseInt(event.target.id, 10)].value = event.target.value;
       } else if (event.target.type === 'checkbox') {
         todos[parseInt(event.target.id, 10)].checked = event.target.checked;
+        if (event.target.checked) {
+          setProgress(progress + 1);
+        } else {
+          setProgress(progress - 1);
+        }
       }
     }
   };
@@ -40,8 +47,8 @@ const NewTaskForm = () => {
   const TodoRow = () => (
     Array.from({ length: todoRowAmount }, (ele, indx) => (
       <div key={(indx + 1).toString()} className={styles.todo}>
-        <Checkbox id={(indx).toString()} className={styles.checkBox} color="default" />
-        <input id={(indx).toString()} className={styles.todoInput} placeholder="todo" type="text" />
+        <Checkbox id={(indx).toString()} className={styles.checkBox} color="default" checked={todos[indx].checked} />
+        <input id={(indx).toString()} className={styles.todoInput} placeholder="todo" type="text" value={todos[indx].value} />
         <IconButton id={(indx).toString()} className={styles.todoDeleteIcon} onClick={handleChange} name="deleteRow">
           <ClearIcon fontSize="small" />
         </IconButton>
@@ -49,15 +56,15 @@ const NewTaskForm = () => {
     ))
   );
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const todoPercentage = 100 / todos.length;
-    todos.forEach(
-      (todo) => (todo.checked ? setProgress(progress + todoPercentage) : null),
-    );
-    createTask({
-      taskName, description, progress, todos,
+
+    const response = await createTask({
+      taskName, description, progress: ((progress / todos.length) * 100), todos,
     });
+    if (response.status === 201) {
+      history.push('/tasks');
+    }
   };
   return (
     <>
@@ -89,7 +96,6 @@ const NewTaskForm = () => {
         </form>
       </div>
     </>
-
   );
 };
 
