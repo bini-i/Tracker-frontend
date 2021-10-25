@@ -1,42 +1,128 @@
-import PropTypes from 'prop-types';
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-// import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
+import { useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import * as styles from '../styles/NewTaskForm.module.css';
+import updateTaskAPI from '../helpers/api/updateTaskAPI';
+import { mapDispatchToProps } from '../reducers';
 
-const Task = ({ taskName }) => (
-  <Card sx={{ maxWidth: 345 }}>
-    <CardHeader
-      action={(
-        <IconButton aria-label="settings">
-          <MoreVertIcon />
+const Task = ({ updateTask }) => {
+  const location = useLocation();
+  const {
+    id,
+    taskNameState,
+    descriptionState,
+    progressState,
+    todosState,
+  } = location.state;
+
+  const data = fetch(`http://localhost:3000/tasks/${id}/todos`)
+    .then((response) => response.json())
+    .then((data) => data);
+
+  console.log('fetched todos');
+  console.log(data);
+
+  const [taskName, setTaskName] = useState(taskNameState);
+  const [description, setDescription] = useState(descriptionState);
+  const [todoRowAmount, settodoRowAmount] = useState(1);
+  const [todos] = useState(todosState);
+  const [progress, setProgress] = useState(progressState);
+  const history = useHistory();
+
+  const handleChange = (event) => {
+    if (event.target.name === 'taskName') {
+      setTaskName(event.target.value);
+    } else if (event.target.name === 'description') {
+      setDescription(event.target.value);
+    } else if (event.currentTarget.name === 'addRow') {
+      settodoRowAmount(todoRowAmount + 1);
+      todos.push({ checked: false });
+    } else if (event.currentTarget.name === 'deleteRow') {
+      const indx = parseInt(event.currentTarget.id, 10);
+      todos.splice(indx, 1);
+      settodoRowAmount(todoRowAmount - 1);
+    } else if (event.currentTarget.attributes.name.nodeValue === 'todo') {
+      if (event.target.type === 'text') {
+        todos[parseInt(event.target.id, 10)].value = event.target.value;
+      } else if (event.target.type === 'checkbox') {
+        todos[parseInt(event.target.id, 10)].checked = event.target.checked;
+        if (event.target.checked) {
+          setProgress(progress + 1);
+        } else {
+          setProgress(progress - 1);
+        }
+      }
+    }
+  };
+
+  const TodoRow = () => (
+    Array.from({ length: todoRowAmount }, (ele, indx) => (
+      <div key={(indx + 1).toString()} className={styles.todo}>
+        <Checkbox id={(indx).toString()} className={styles.checkBox} color="default" checked={todos[indx].checked} />
+        <input id={(indx).toString()} className={styles.todoInput} placeholder="todo" type="text" value={todos[indx].value} />
+        <IconButton id={(indx).toString()} className={styles.todoDeleteIcon} onClick={handleChange} name="deleteRow">
+          <ClearIcon fontSize="small" />
         </IconButton>
-        )}
-      title={taskName}
-      subheader="September 14, 2016"
-    />
-    {/* <CardMedia
-        component="img"
-        height="194"
-        image="/static/images/cards/paella.jpg"
-        alt="Paella dish"
-      /> */}
-    <CardContent>
-      <Typography variant="body2" color="text.secondary">
-        This impressive paella is a perfect party dish and a fun meal to cook
-        together with your guests. Add 1 cup of frozen peas along with the mussels,
-        if you like.
-      </Typography>
-    </CardContent>
-  </Card>
-);
-export default Task;
+      </div>
+    ))
+  );
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const response = await updateTaskAPI({
+      id, taskName, description, progress: ((progress / todos.length) * 100), todos,
+    });
+    if (response.status === 200) {
+      updateTask({
+        id, taskName, description, progress: ((progress / todos.length) * 100), todos,
+      });
+      history.push('/tasks');
+    }
+  };
+  return (
+    <>
+      <div className={styles.newTaskFormContainer}>
+        <form onSubmit={handleSubmit}>
+          <TextField className={styles.newTaskInput} onChange={handleChange} name="taskName" label="Task Name" variant="standard" value={taskName} />
+          <TextField
+            className={styles.newTaskInput}
+            onChange={handleChange}
+            name="description"
+            label="Description"
+            multiline
+            rows={3}
+            value={description}
+            variant="standard"
+          />
+          <Divider className={styles.divider} textAlign="left">Todos</Divider>
+
+          <div onChange={handleChange} className={styles.todoContainer} name="todo">
+            <TodoRow />
+          </div>
+
+          <IconButton className={styles.todoAddIcon} onClick={handleChange} name="addRow">
+            <AddIcon />
+          </IconButton>
+          <Button className={styles.submitBtn} type="submit" variant="contained" color="success">
+            Update Task
+          </Button>
+        </form>
+      </div>
+    </>
+  );
+};
+
+export default connect(null, mapDispatchToProps)(Task);
 
 Task.propTypes = {
-  taskName: PropTypes.string.isRequired,
-  // expand: PropTypes.bool.isRequired,
+  updateTask: PropTypes.func.isRequired,
 };

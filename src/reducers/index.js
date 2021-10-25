@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import signedInReducer from './signIn';
 import tasksReducer from './tasks';
-import { setSignedIn, addTask } from '../actions';
+import { setSignedIn, addTask, updateTask } from '../actions';
 
 export const rootReducer = combineReducers({
   signedIn: signedInReducer,
@@ -19,5 +19,8 @@ export const mapDispatchToProps = (dispatch) => ({
   },
   addTask: (task) => {
     dispatch(addTask(task));
+  },
+  updateTask: (task) => {
+    dispatch(updateTask(task));
   },
 });
