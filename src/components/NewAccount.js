@@ -8,13 +8,11 @@ const handleSession = async (event) => {
   headers.append('Content-Type', 'application/json');
 
   if (localStorage.getItem('email') && localStorage.getItem('token')) {
-    console.log('found token storage');
     headers.append('X-User-Email', localStorage.getItem('email'));
     headers.append('X-User-Token', localStorage.getItem('token'));
   } else {
     headers.append('X-User-Email', '');
     headers.append('X-User-Token', '');
-    console.log('found nothing from storage');
   }
 
   //   const payload = { email, password };

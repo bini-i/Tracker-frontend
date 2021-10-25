@@ -11,7 +11,7 @@ const getAllTasks = async () => {
     headers,
   };
 
-  const response = await fetch(url, options).then((response) => response);
+  const response = await fetch(url, options).then((response) => response.json());
   return response;
 };
 

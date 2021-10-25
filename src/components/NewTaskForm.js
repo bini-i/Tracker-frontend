@@ -7,10 +7,13 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import * as styles from '../styles/NewTaskForm.module.css';
 import createTask from '../helpers/api/createTask';
+import { mapDispatchToProps } from '../reducers';
 
-const NewTaskForm = () => {
+const NewTaskForm = ({ addTask }) => {
   const [taskName, setTaskName] = useState('');
   const [description, setDescription] = useState('');
   const [todoRowAmount, settodoRowAmount] = useState(1);
@@ -63,6 +66,9 @@ const NewTaskForm = () => {
       taskName, description, progress: ((progress / todos.length) * 100), todos,
     });
     if (response.status === 201) {
+      addTask({
+        task_name: taskName, description, progress: ((progress / todos.length) * 100),
+      });
       history.push('/tasks');
     }
   };
@@ -99,4 +105,8 @@ const NewTaskForm = () => {
   );
 };
 
-export default NewTaskForm;
+export default connect(null, mapDispatchToProps)(NewTaskForm);
+
+NewTaskForm.propTypes = {
+  addTask: PropTypes.func.isRequired,
+};
