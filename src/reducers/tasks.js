@@ -1,6 +1,7 @@
 import { ADD_TASK, UPDATE_TASK } from '../actions';
 
 const tasksReducer = (state = [], action) => {
+  let result = null;
   switch (action.type) {
     case ADD_TASK:
       return [...state, action.task];
@@ -15,7 +16,7 @@ const tasksReducer = (state = [], action) => {
       //   description: action.task.description,
       //   progress: action.task.progress,
       // });
-      return [
+      result = [
         ...state.slice(0, state.findIndex((ele) => ele.id === action.task.id)),
         {
           id: action.task.id,
@@ -25,6 +26,8 @@ const tasksReducer = (state = [], action) => {
         },
         ...state.slice(state.findIndex((ele) => ele.id === action.task.id) + 1),
       ];
+      console.log(result);
+      return result;
     default:
       return state;
   }

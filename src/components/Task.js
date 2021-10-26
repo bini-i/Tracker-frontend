@@ -19,22 +19,23 @@ const Task = ({ updateTask }) => {
     id,
     taskNameState,
     descriptionState,
-    progressState,
     todosState,
   } = location.state;
 
-  const data = fetch(`http://localhost:3000/tasks/${id}/todos`)
-    .then((response) => response.json())
-    .then((data) => data);
-
-  console.log('fetched todos');
-  console.log(data);
+  let newProgressState = 0;
+  const incrementProgressState = () => {
+    newProgressState += 1;
+  };
+  todosState.forEach((todo) => {
+    // eslint-disable-next-line no-unused-expressions
+    todo.checked ? incrementProgressState() : null;
+  });
 
   const [taskName, setTaskName] = useState(taskNameState);
   const [description, setDescription] = useState(descriptionState);
-  const [todoRowAmount, settodoRowAmount] = useState(1);
+  const [todoRowAmount, settodoRowAmount] = useState(todosState.length);
   const [todos] = useState(todosState);
-  const [progress, setProgress] = useState(progressState);
+  const [progress, setProgress] = useState(newProgressState);
   const history = useHistory();
 
   const handleChange = (event) => {
@@ -67,7 +68,7 @@ const Task = ({ updateTask }) => {
     Array.from({ length: todoRowAmount }, (ele, indx) => (
       <div key={(indx + 1).toString()} className={styles.todo}>
         <Checkbox id={(indx).toString()} className={styles.checkBox} color="default" checked={todos[indx].checked} />
-        <input id={(indx).toString()} className={styles.todoInput} placeholder="todo" type="text" value={todos[indx].value} />
+        <input id={(indx).toString()} className={styles.todoInput} placeholder="todo" type="text" defaultValue={todos[indx].value} />
         <IconButton id={(indx).toString()} className={styles.todoDeleteIcon} onClick={handleChange} name="deleteRow">
           <ClearIcon fontSize="small" />
         </IconButton>
