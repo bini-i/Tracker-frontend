@@ -42,9 +42,10 @@ const NewSession = ({ signedIn, setSignedIn }) => {
       localStorage.setItem('email', data.user.email);
       localStorage.setItem('token', data.user.authentication_token);
       setSignedIn(true);
-    } else {
-      setSignedIn(false);
+      return <Tasks />;
     }
+    setSignedIn(false);
+    return <login />;
   };
 
   const handleChange = (event) => {
