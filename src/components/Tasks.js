@@ -13,7 +13,6 @@ import * as styles from '../styles/Tasks.module.css';
 import { mapStateToProps } from '../reducers';
 
 const Tasks = ({ tasks }) => {
-  // console.log(tasks);
   const renderTaskItem = (task) => (
     <Card key={task.id} className={styles.taskCard}>
       <Box sx={{
@@ -71,11 +70,7 @@ const Tasks = ({ tasks }) => {
     </Card>
   );
   const renderTasks = tasks.map(
-    (task) => {
-      // eslint-disable-next-line no-unused-expressions
-      task.id === 14 ? console.log(task) : null;
-      return renderTaskItem(task);
-    },
+    (task) => renderTaskItem(task),
   );
   return (
     <>

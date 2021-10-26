@@ -19,8 +19,6 @@ import getAllTasks from './helpers/api/getAllTasks';
 const App = ({ addTask }) => {
   useEffect(async () => {
     const fetchedTasks = await getAllTasks();
-    // console.log('fetching');
-    // console.log(fetchedTasks);
     fetchedTasks.forEach((task) => {
       addTask(task);
     });
