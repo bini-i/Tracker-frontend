@@ -17,6 +17,7 @@ import NewTaskForm from './components/NewTaskForm';
 import getAllTasks from './helpers/api/getAllTasks';
 
 const App = ({ addTask }) => {
+  const paths = ['/tasks'];
   useEffect(async () => {
     const fetchedTasks = await getAllTasks();
     fetchedTasks.forEach((task) => {
@@ -34,7 +35,7 @@ const App = ({ addTask }) => {
       <div className="App-body">
         <Switch>
           <Route exact path="/">
-            <Redirect to="/login" />
+            <Redirect to="/tasks" />
           </Route>
           <Route exact path="/login" component={NewSession} />
           <Route exact path="/signup" component={NewAccount} />
@@ -43,7 +44,7 @@ const App = ({ addTask }) => {
           <Route exact path="/newtask" component={NewTaskForm} />
         </Switch>
       </div>
-      {useLocation().pathname !== '/newtask' ? <CreateBtn /> : null}
+      {paths.indexOf(useLocation().pathname) >= 0 ? <CreateBtn /> : null}
     </>
   );
 };
