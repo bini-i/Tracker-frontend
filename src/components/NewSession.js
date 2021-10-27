@@ -7,6 +7,8 @@ import * as styles from '../styles/NewSession.module.css';
 import Tasks from './Tasks';
 
 const NewSession = ({ signedIn, setSignedIn }) => {
+  console.log('about to render new session');
+  // console.log(signedIn);
   if (signedIn) {
     return <Tasks />;
   }

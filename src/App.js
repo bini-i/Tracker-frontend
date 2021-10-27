@@ -2,7 +2,7 @@ import {
   Redirect, Route, Switch,
   useLocation,
 } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './styles/App.css';
@@ -16,20 +16,31 @@ import { mapDispatchToProps, mapStateToProps } from './reducers';
 import NewTaskForm from './components/NewTaskForm';
 import getAllTasks from './helpers/api/getAllTasks';
 
-const App = ({ addTask, signedIn }) => {
-  const paths = ['/tasks'];
+const App = ({ addTask, signedIn, setSignedIn }) => {
+  console.log('about to render new App');
+  console.log(localStorage.getItem('token'));
+  const [paths] = useState(['/tasks']);
+
+  // eslint-disable-next-line consistent-return
   useEffect(async () => {
-    const fetchedTasks = await getAllTasks();
-    fetchedTasks.forEach((task) => {
-      addTask(task);
-    });
-  }, []);
+    if (localStorage.getItem('email') && localStorage.getItem('token')) {
+      setSignedIn(true);
+    }
+
+    if (signedIn) {
+      const fetchedTasks = await getAllTasks();
+      fetchedTasks.forEach((task) => {
+        addTask(task);
+      });
+      return <Tasks />;
+    }
+  }, [signedIn]);
 
   return (
     <>
       <div className="App">
         <header className="App-header">
-          <MenuBar />
+          <MenuBar signedIn={signedIn} setSignedIn={setSignedIn} />
         </header>
       </div>
       <div className="App-body">
@@ -54,4 +65,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 App.propTypes = {
   addTask: PropTypes.func.isRequired,
   signedIn: PropTypes.bool.isRequired,
+  setSignedIn: PropTypes.func.isRequired,
 };
