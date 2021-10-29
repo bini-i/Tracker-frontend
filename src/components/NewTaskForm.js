@@ -66,8 +66,13 @@ const NewTaskForm = ({ addTask }) => {
       taskName, description, progress: ((progress / todos.length) * 100), todos,
     });
     if (response.status === 201) {
+      const data = await response.json();
       addTask({
-        task_name: taskName, description, progress: ((progress / todos.length) * 100),
+        id: data.id,
+        task_name: taskName,
+        description,
+        progress: ((progress / todos.length) * 100),
+        todos: data.todos,
       });
       history.push('/tasks');
     }

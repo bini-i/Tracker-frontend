@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { mapDispatchToProps, mapStateToProps } from '../reducers';
 import * as styles from '../styles/NewSession.module.css';
@@ -8,8 +8,10 @@ import * as styles from '../styles/NewSession.module.css';
 import Tasks from './Tasks';
 
 const NewSession = ({ signedIn, setSignedIn }) => {
+  const history = useHistory();
+
   if (signedIn) {
-    return <Tasks />;
+    history.push('/tasks');
   }
 
   const [email, setEmail] = useState('');

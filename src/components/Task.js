@@ -84,7 +84,11 @@ const Task = ({ updateTask }) => {
     });
     if (response.status === 200) {
       updateTask({
-        id, task_name: taskName, description, progress: ((progress / todos.length) * 100), todos,
+        id,
+        task_name: taskName,
+        description,
+        progress: ((progress / todos.length) * 100),
+        todos,
       });
       history.push('/tasks');
     }

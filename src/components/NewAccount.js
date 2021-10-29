@@ -1,15 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as styles from '../styles/NewSession.module.css';
 import { mapDispatchToProps, mapStateToProps } from '../reducers';
-import Tasks from './Tasks';
 
 const NewAccount = ({ signedIn, setSignedIn }) => {
+  const history = useHistory();
+
   if (signedIn) {
-    return <Tasks />;
+    history.push('/tasks');
   }
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const handleSession = async (event) => {

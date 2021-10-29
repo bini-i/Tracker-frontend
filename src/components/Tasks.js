@@ -8,15 +8,16 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as styles from '../styles/Tasks.module.css';
 import { mapStateToProps } from '../reducers';
 // eslint-disable-next-line import/no-cycle
-import NewSession from './NewSession';
 
 const Tasks = ({ tasks, signedIn }) => {
+  const history = useHistory();
+
   if (!signedIn) {
-    return <NewSession />;
+    history.push('/login');
   }
 
   const renderTaskItem = (task) => (

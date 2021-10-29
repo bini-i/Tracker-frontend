@@ -1,6 +1,6 @@
 import {
   Redirect, Route, Switch,
-  useLocation,
+  useLocation, useHistory,
 } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
@@ -20,6 +20,7 @@ const App = ({
   addTask, resetTasks, signedIn, setSignedIn,
 }) => {
   const [paths] = useState(['/tasks']);
+  const history = useHistory();
 
   // eslint-disable-next-line consistent-return
   useEffect(async () => {
@@ -33,7 +34,9 @@ const App = ({
       fetchedTasks.forEach((task) => {
         addTask(task);
       });
-      return <Tasks />;
+      history.push('/tasks');
+    } else {
+      history.push('/login');
     }
   }, [signedIn]);
 
