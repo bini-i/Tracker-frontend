@@ -11,8 +11,14 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
 import * as styles from '../styles/Tasks.module.css';
 import { mapStateToProps } from '../reducers';
+// eslint-disable-next-line import/no-cycle
+import NewSession from './NewSession';
 
-const Tasks = ({ tasks }) => {
+const Tasks = ({ tasks, signedIn }) => {
+  if (!signedIn) {
+    return <NewSession />;
+  }
+
   const renderTaskItem = (task) => (
     <Card key={task.id} className={styles.taskCard}>
       <Box sx={{
@@ -85,4 +91,5 @@ export default connect(mapStateToProps, null)(Tasks);
 
 Tasks.propTypes = {
   tasks: PropTypes.instanceOf(Array).isRequired,
+  signedIn: PropTypes.bool.isRequired,
 };

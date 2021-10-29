@@ -1,5 +1,5 @@
 const getAllTasks = async () => {
-  const url = 'http://localhost:3000/tasks';
+  const url = 'https://tasks-tracker-api.herokuapp.com/tasks';
   // headers
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');

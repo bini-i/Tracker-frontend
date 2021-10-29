@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { mapDispatchToProps, mapStateToProps } from '../reducers';
 import * as styles from '../styles/NewSession.module.css';
+// eslint-disable-next-line import/no-cycle
 import Tasks from './Tasks';
 
 const NewSession = ({ signedIn, setSignedIn }) => {
-  console.log('about to render new session');
-  // console.log(signedIn);
   if (signedIn) {
     return <Tasks />;
   }
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -31,7 +31,7 @@ const NewSession = ({ signedIn, setSignedIn }) => {
 
     const payload = { email, password };
     const response = await fetch(
-      'http://localhost:3000/sessions',
+      'https://tasks-tracker-api.herokuapp.com/sessions',
       {
         method: 'POST',
         mode: 'cors',

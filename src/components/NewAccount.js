@@ -4,8 +4,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as styles from '../styles/NewSession.module.css';
 import { mapDispatchToProps, mapStateToProps } from '../reducers';
+import Tasks from './Tasks';
 
-const NewAccount = ({ setSignedIn }) => {
+const NewAccount = ({ signedIn, setSignedIn }) => {
+  if (signedIn) {
+    return <Tasks />;
+  }
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const handleSession = async (event) => {
@@ -24,7 +28,7 @@ const NewAccount = ({ setSignedIn }) => {
 
     const payload = { email, password };
     const response = await fetch(
-      'http://localhost:3000/accounts',
+      'https://tasks-tracker-api.herokuapp.com/accounts',
       {
         method: 'POST',
         mode: 'cors',
@@ -34,12 +38,12 @@ const NewAccount = ({ setSignedIn }) => {
     ).then((response) => response);
     const data = await response.json();
     if (response.status === 201) {
-      console.log('account successfuly created');
+      // console.log('account successfuly created');
       localStorage.setItem('email', data.user.email);
       localStorage.setItem('token', data.user.authentication_token);
       setSignedIn(true);
     } else {
-      console.log('response not 201');
+      // console.log('response not 201');
     }
   };
 
@@ -93,5 +97,6 @@ const NewAccount = ({ setSignedIn }) => {
 export default connect(mapStateToProps, mapDispatchToProps)(NewAccount);
 
 NewAccount.propTypes = {
+  signedIn: PropTypes.bool.isRequired,
   setSignedIn: PropTypes.func.isRequired,
 };
