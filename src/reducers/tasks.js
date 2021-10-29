@@ -1,4 +1,4 @@
-import { ADD_TASK, UPDATE_TASK } from '../actions';
+import { ADD_TASK, UPDATE_TASK, RESET_TASK } from '../actions';
 
 const tasksReducer = (state = [], action) => {
   let result = null;
@@ -18,6 +18,8 @@ const tasksReducer = (state = [], action) => {
         ...state.slice(state.findIndex((ele) => ele.id === action.task.id) + 1),
       ];
       return result;
+    case RESET_TASK:
+      return [];
     default:
       return state;
   }

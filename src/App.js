@@ -16,9 +16,9 @@ import { mapDispatchToProps, mapStateToProps } from './reducers';
 import NewTaskForm from './components/NewTaskForm';
 import getAllTasks from './helpers/api/getAllTasks';
 
-const App = ({ addTask, signedIn, setSignedIn }) => {
-  console.log('about to render new App');
-  console.log(localStorage.getItem('token'));
+const App = ({
+  addTask, resetTasks, signedIn, setSignedIn,
+}) => {
   const [paths] = useState(['/tasks']);
 
   // eslint-disable-next-line consistent-return
@@ -28,6 +28,7 @@ const App = ({ addTask, signedIn, setSignedIn }) => {
     }
 
     if (signedIn) {
+      resetTasks();
       const fetchedTasks = await getAllTasks();
       fetchedTasks.forEach((task) => {
         addTask(task);
@@ -64,6 +65,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 App.propTypes = {
   addTask: PropTypes.func.isRequired,
+  resetTasks: PropTypes.func.isRequired,
   signedIn: PropTypes.bool.isRequired,
   setSignedIn: PropTypes.func.isRequired,
 };
