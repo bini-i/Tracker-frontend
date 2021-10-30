@@ -6,6 +6,7 @@
   padding: 20px;
   margin: 30px;
 }
+
 .loginBox {
   width: 100%;
   background-color: white;
@@ -33,7 +34,6 @@
 
 .inputBox {
   font-size: 14px;
-  display: block;
   border: 1px solid #d3d3d3;
   box-sizing: border-box;
   color: black;
@@ -41,7 +41,6 @@
   padding: 0 16px;
   height: 40px;
   background: #fff;
-  display: -webkit-flex;
   display: flex;
   -webkit-align-items: center;
   align-items: center;

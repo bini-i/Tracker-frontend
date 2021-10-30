@@ -3,6 +3,7 @@
   flex-direction: column;
   padding: 0 25px;
 }
+
 form {
   width: 100%;
   display: flex;
@@ -36,14 +37,10 @@ form {
   margin-right: 15px;
 }
 
-.checkBox {
-}
-
 .todoAddIcon {
   color: var(--pantone-dark);
 }
-.todoDeleteIcon {
-}
+
 .submitBtn {
   margin: 10px 0 !important;
 }
