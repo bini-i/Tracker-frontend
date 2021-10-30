@@ -39,7 +39,7 @@ The project uses react components and redux store to display a list of tasks alo
 
 ## Live Demo
 
-[Live Demo Link]()
+[Live Demo Link](https://tasks-trackers.herokuapp.com/)
 
 ## Prerequisite
 
