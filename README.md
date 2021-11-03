@@ -11,6 +11,9 @@ The project uses react components and redux store to display a list of tasks alo
 - A progress mark is calculated and stored for each task based on the number of todos checked as completed.
 - Clicking on any task allows to change details of task including todos completed, which consequently alters the progress.
 
+![image](https://user-images.githubusercontent.com/61377322/140049941-1424fc7f-74d0-4291-ad6f-1167f960499b.png)
+
+
 ## Table of Contents
 
 - [About the Project](#about-the-project)
