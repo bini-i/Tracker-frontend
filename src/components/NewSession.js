@@ -33,7 +33,7 @@ const NewSession = ({ signedIn, setSignedIn }) => {
 
     const payload = { email, password };
     const response = await fetch(
-      'https://tasks-tracker-api.herokuapp.com/sessions',
+      `${window.URL}/sessions`,
       {
         method: 'POST',
         mode: 'cors',

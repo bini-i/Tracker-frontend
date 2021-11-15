@@ -30,7 +30,7 @@ const NewAccount = ({ signedIn, setSignedIn }) => {
 
     const payload = { email, password };
     const response = await fetch(
-      'https://tasks-tracker-api.herokuapp.com/accounts',
+      `${window.URL}/accounts`,
       {
         method: 'POST',
         mode: 'cors',

@@ -1,5 +1,5 @@
 const updateTaskAPI = async (payload) => {
-  const url = `https://tasks-tracker-api.herokuapp.com/tasks/${payload.id}`;
+  const url = `${window.URL}/tasks/${payload.id}`;
   // headers
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
