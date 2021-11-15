@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Link, useHistory } from 'react-router-dom';
-import { TimeStamp } from 'react-timestamp';
+import TimeAgo from 'react-timeago';
 import * as styles from '../styles/Tasks.module.css';
 import { mapStateToProps } from '../reducers';
 // eslint-disable-next-line import/no-cycle
@@ -64,7 +64,7 @@ const Tasks = ({ tasks, signedIn }) => {
             title={task.task_name}
           />
         </Link>
-        <TimeStamp date={Date} />
+        <TimeAgo date={Date.parse(task.created_at)} live={false} />
         <Typography
           variant="body2"
           color="text.secondary"
