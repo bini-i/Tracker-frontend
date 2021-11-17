@@ -1,0 +1,39 @@
+.tasksContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 25px;
+}
+
+.taskCard {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 18% 75% 7%;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 15px 15px;
+}
+
+.cardTextContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 15px !important;
+}
+
+.cardHeader {
+  padding: 8px 5px !important;
+  cursor: pointer;
+}
+
+.cardBody {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  padding: 0 5px;
+}
+
+.moreIcon {
+  margin-left: auto !important;
+}
