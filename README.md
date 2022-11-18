@@ -12,9 +12,6 @@ The project uses react components and redux store to display a list of tasks alo
 - Clicking on any task allows to change details of task including todos completed, which consequently alters the progress.
 
 ![Untitled design (1)](https://user-images.githubusercontent.com/61377322/202076559-6aa515b4-a129-4ab7-8931-759de84d9b84.png)
-![Screen Shot 2022-11-16 at 06 14 40](https://user-images.githubusercontent.com/61377322/202075161-d3414fce-a25a-41e4-b520-a67474b83aee.png)
-![Screen Shot 2022-11-16 at 06 13 46](https://user-images.githubusercontent.com/61377322/202075208-1b384f46-b24a-474e-ac55-906311739e87.png)
-![Screen Shot 2022-11-16 at 06 14 32](https://user-images.githubusercontent.com/61377322/202075222-29f2e6b8-4c74-49de-a486-631cc4e3e81e.png)
 
 
 ## Table of Contents
